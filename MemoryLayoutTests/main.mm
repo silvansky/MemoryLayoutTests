@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+using namespace std;
 
 #import <objc/runtime.h>
 
@@ -17,16 +18,33 @@
 #import "OFoo.h"
 #import "OBar.h"
 
+void dump(void *vptr, size_t count)
+{
+	char *ptr = (char *)vptr;
+	printf("* dumping %p (%ld)\n", ptr, count);
+	size_t pos = 0;
+	for (pos = 0; pos < count; pos++)
+	{
+		if (!(pos % 16))
+			printf("%p: ", ptr + pos);
+
+		printf("%02x ", (int)ptr[pos]);
+
+		if ((pos % 16) == 15)
+			printf("\n");
+	}
+	if (count % 16)
+		printf("\n");
+	printf("* end dump\n");
+}
+
 class Simple
 {
 public:
-	Simple() { a = 10; }
+	Simple() { a = 10; b = 16; }
 	int a;
+	int b;
 };
-
-typedef int (Foo::*MyFuncPtrType)() const;
-
-using namespace std;
 
 int main(int argc, const char * argv[])
 {
@@ -47,6 +65,10 @@ int main(int argc, const char * argv[])
 	int *sa = &s->a;
 	cout << "Simple *s is " << s << " and &s->a is " << sa << endl;
 	cout << "size of Simple is " << sizeof(Simple) << endl;
+
+	cout << endl;
+
+	dump(s, sizeof(Simple));
 
 	cout << endl;
 
