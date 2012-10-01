@@ -27,10 +27,10 @@ int main(int argc, const char * argv[])
 	Foo *foo1 = new Foo();
 	Foo *foo2 = new Bar();
 	foo1->setValue(10);
-	Bar *bar1 = dynamic_cast<Bar *>(foo2);
+	Bar *bar1 = static_cast<Bar *>(foo2);
 	bar1->setValue(50);
 	bar1->setDoubleValue(500.0);
-	Baz *baz1 = dynamic_cast<Baz *>(bar1);
+	Baz *baz1 = static_cast<Baz *>(bar1);
 
 	Simple *s = new Simple();
 
