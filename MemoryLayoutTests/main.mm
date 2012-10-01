@@ -20,7 +20,7 @@ using namespace std;
 
 void dump(void *vptr, size_t count)
 {
-	char *ptr = (char *)vptr;
+	unsigned char *ptr = (unsigned char *)vptr;
 	printf("* dumping %p (%ld)\n", ptr, count);
 	size_t pos = 0;
 	for (pos = 0; pos < count; pos++)
@@ -82,6 +82,21 @@ int main(int argc, const char * argv[])
 	cout << "foo2: " << foo2 << " value: " << foo2->getValue() << endl;
 	cout << "bar1: " << bar1 << " value: " << bar1->getValue() << " double value: " << bar1->getDoubleValue() << endl;
 	cout << "baz1: " << baz1 << " value: " << baz1->getValue() << " (" << baz1->a << ")" << endl;
+
+	cout << endl;
+
+	cout << "Memory dump of foo1:" << endl;
+	dump(foo1, sizeof(Foo));
+
+	cout << endl;
+
+	cout << "Memory dump of bar1:" << endl;
+	dump(bar1, sizeof(Bar));
+
+	cout << endl;
+
+	cout << "Memory dump of baz1:" << endl;
+	dump(baz1, sizeof(Baz));
 
 	cout << endl;
 
