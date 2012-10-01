@@ -46,6 +46,8 @@ public:
 	int b;
 };
 
+typedef void (*FunctionPtr)(void);
+
 int main(int argc, const char * argv[])
 {
 	cout << "*** C++ Classes ***" << endl;
@@ -112,19 +114,67 @@ int main(int argc, const char * argv[])
 	cout << "offset of baz1: " << (size_t)baz1 - (size_t)bar1 << endl;
 
 	cout << endl;
-	
-	size_t *vptr = reinterpret_cast<size_t *>(foo1);
+
 	cout << hex;
+
+	size_t *vptr = reinterpret_cast<size_t *>(foo1);
 	cout << "vptr of foo1 is " << vptr << " value 0x" << *vptr << endl;
+	dump((void *)*vptr, 64);
+	cout << endl;
+
 	vptr = reinterpret_cast<size_t *>(bar1);
 	cout << "vptr of bar1 is " << vptr << " value 0x" << *vptr << endl;
+	dump((void *)*vptr, 64);
+	cout << endl;
+
 	vptr = reinterpret_cast<size_t *>(baz1);
 	cout << "vptr of baz1 is " << vptr << " value 0x" << *vptr << endl;
+	dump((void *)*vptr, 64);
+
 	cout << dec;
+
+	cout << endl;
+
+	cout << "Trying to call Baz::printHello directly from vtable" << endl;
+	size_t *funcs_ptr = (size_t *)*vptr;
+	// we have 5 virtual functions in Baz, we can call directly the last one
+	FunctionPtr bazFunc5 = (FunctionPtr)(size_t *)funcs_ptr[5];
+	bazFunc5();
+
+	cout << endl;
+
+	cout << "Allocating space for new Bar object..." << endl;
+
+	// creating zero-filled chunk of memory
+	Bar *bar2 = (Bar *)calloc(1, sizeof(Bar));
+	// getting existing vptr for Bar
+	vptr = reinterpret_cast<size_t *>(bar1);
+	size_t *newVptr = reinterpret_cast<size_t *>(bar2);
+	// assigning new vptr for Bar
+	*newVptr = *vptr;
+	// getting existing vptr for Baz and a new one
+	vptr = (size_t *)((char *)vptr + sizeof(Foo));
+	newVptr = (size_t *)((char *)newVptr + sizeof(Foo));
+	// assigning new vptr for Baz
+	*newVptr = *vptr;
+
+	// ok, we suppose bar2 to be a valid object...
+	bar2->setValue(bar1->getValue());
+	bar2->setDoubleValue(bar1->getDoubleValue());
+
+	cout << "bar2: " << bar2 << " value " << bar2->getValue() << " double value " << bar2->getDoubleValue() << endl;
+	cout << "Memory dump for bar2:" << endl;
+	dump(bar2, sizeof(Bar));
+	cout << "Memory dump for bar1 (to compare):" << endl;
+	dump(bar1, sizeof(Bar));
+	cout << "Note that c-tor wasn\'t called, so members, inherited from Foo and Baz are uninitialized" << endl;
+
+	cout << endl;
 
 	delete foo1;
 	delete foo2;
 	delete s;
+	free(bar2);
 
 	cout << endl;
 

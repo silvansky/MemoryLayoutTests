@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 silvansky. All rights reserved.
 //
 
+#include <stdio.h>
+
 #include "Baz.h"
 
 Baz::Baz()
@@ -31,6 +33,13 @@ void Baz::setValue(const int &value)
 int * Baz::getValuePointer()
 {
 	return &a;
+}
+
+void Baz::printHello()
+{
+	// NOTE: this function does not use "this" pointer
+	// so we can call it directly from vtable, pointed by vptr
+	printf("Hello from Baz!\n");
 }
 
 void Baz::bazSpecific()

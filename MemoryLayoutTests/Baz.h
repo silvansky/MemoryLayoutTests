@@ -13,10 +13,11 @@ class Baz
 {
 public:
 	Baz();
-	~Baz();
+	virtual ~Baz();
 	virtual int getValue() const;
 	virtual void setValue(const int &value);
 	virtual int *getValuePointer();
+	virtual void printHello();
 	void bazSpecific();
 public:
 	int a;
