@@ -27,3 +27,8 @@ void Foo::setValue(const int &value)
 {
 	a = value;
 }
+
+void Foo::fooSpecific()
+{
+	a += 10;
+}

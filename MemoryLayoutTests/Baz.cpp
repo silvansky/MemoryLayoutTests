@@ -32,3 +32,8 @@ int * Baz::getValuePointer()
 {
 	return &a;
 }
+
+void Baz::bazSpecific()
+{
+	a *= 2;
+}

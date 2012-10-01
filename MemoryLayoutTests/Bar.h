@@ -21,6 +21,7 @@ public:
 	virtual void setDoubleValue(const double &value);
 	virtual int getValue() const;
 	virtual void setValue(const int &value);
+	void barSpecific();
 public:
 	double b;
 	int c;

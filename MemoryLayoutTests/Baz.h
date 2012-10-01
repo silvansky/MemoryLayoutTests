@@ -17,6 +17,7 @@ public:
 	virtual int getValue() const;
 	virtual void setValue(const int &value);
 	virtual int *getValuePointer();
+	void bazSpecific();
 public:
 	int a;
 };

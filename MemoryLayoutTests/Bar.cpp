@@ -38,3 +38,8 @@ void Bar::setValue(const int &value)
 {
 	c = value;
 }
+
+void Bar::barSpecific()
+{
+	b += c;
+}

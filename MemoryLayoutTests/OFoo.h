@@ -9,5 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 @interface OFoo : NSObject
+{
+	int _a;
+}
+
+@property (nonatomic, assign) int a;
+
+- (int *)getValuePointer;
 
 @end

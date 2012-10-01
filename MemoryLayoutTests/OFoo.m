@@ -10,4 +10,11 @@
 
 @implementation OFoo
 
+@synthesize a = _a;
+
+- (int *)getValuePointer
+{
+	return &_a;
+}
+
 @end

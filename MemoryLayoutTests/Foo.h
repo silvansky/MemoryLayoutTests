@@ -16,6 +16,7 @@ public:
 	virtual ~Foo();
 	virtual int getValue() const;
 	virtual void setValue(const int &value);
+	void fooSpecific();
 public:
 	int a;
 };

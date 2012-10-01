@@ -13,6 +13,7 @@
 		C5B66B53161999A2003F825B /* OFoo.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B66B52161999A2003F825B /* OFoo.m */; };
 		C5B66B5616199A8D003F825B /* Bar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5B66B5416199A8D003F825B /* Bar.cpp */; };
 		C5B66B591619AEA6003F825B /* Baz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5B66B571619AEA6003F825B /* Baz.cpp */; };
+		C5B66B5C1619C704003F825B /* OBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B66B5B1619C704003F825B /* OBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,8 @@
 		C5B66B5516199A8D003F825B /* Bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bar.h; sourceTree = "<group>"; };
 		C5B66B571619AEA6003F825B /* Baz.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Baz.cpp; sourceTree = "<group>"; };
 		C5B66B581619AEA6003F825B /* Baz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Baz.h; sourceTree = "<group>"; };
+		C5B66B5A1619C704003F825B /* OBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBar.h; sourceTree = "<group>"; };
+		C5B66B5B1619C704003F825B /* OBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,8 @@
 				C5B66B4F16199985003F825B /* Foo.h */,
 				C5B66B51161999A2003F825B /* OFoo.h */,
 				C5B66B52161999A2003F825B /* OFoo.m */,
+				C5B66B5A1619C704003F825B /* OBar.h */,
+				C5B66B5B1619C704003F825B /* OBar.m */,
 				C5B66B4716199970003F825B /* MemoryLayoutTests.1 */,
 			);
 			path = MemoryLayoutTests;
@@ -142,6 +147,7 @@
 				C5B66B53161999A2003F825B /* OFoo.m in Sources */,
 				C5B66B5616199A8D003F825B /* Bar.cpp in Sources */,
 				C5B66B591619AEA6003F825B /* Baz.cpp in Sources */,
+				C5B66B5C1619C704003F825B /* OBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
