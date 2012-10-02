@@ -56,6 +56,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A3629E6F161ADECF009ADA1E /* C++ Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C5B66B571619AEA6003F825B /* Baz.cpp */,
+				C5B66B581619AEA6003F825B /* Baz.h */,
+				C5B66B5416199A8D003F825B /* Bar.cpp */,
+				C5B66B5516199A8D003F825B /* Bar.h */,
+				C5B66B4E16199985003F825B /* Foo.cpp */,
+				C5B66B4F16199985003F825B /* Foo.h */,
+			);
+			name = "C++ Classes";
+			sourceTree = "<group>";
+		};
+		A3629E71161ADEE2009ADA1E /* ObjC Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C5B66B51161999A2003F825B /* OFoo.h */,
+				C5B66B52161999A2003F825B /* OFoo.m */,
+				C5B66B5A1619C704003F825B /* OBar.h */,
+				C5B66B5B1619C704003F825B /* OBar.m */,
+			);
+			name = "ObjC Classes";
+			sourceTree = "<group>";
+		};
 		C5B66B3616199970003F825B = {
 			isa = PBXGroup;
 			children = (
@@ -75,17 +99,9 @@
 		C5B66B4416199970003F825B /* MemoryLayoutTests */ = {
 			isa = PBXGroup;
 			children = (
+				A3629E6F161ADECF009ADA1E /* C++ Classes */,
+				A3629E71161ADEE2009ADA1E /* ObjC Classes */,
 				C5B66B4516199970003F825B /* main.mm */,
-				C5B66B571619AEA6003F825B /* Baz.cpp */,
-				C5B66B581619AEA6003F825B /* Baz.h */,
-				C5B66B5416199A8D003F825B /* Bar.cpp */,
-				C5B66B5516199A8D003F825B /* Bar.h */,
-				C5B66B4E16199985003F825B /* Foo.cpp */,
-				C5B66B4F16199985003F825B /* Foo.h */,
-				C5B66B51161999A2003F825B /* OFoo.h */,
-				C5B66B52161999A2003F825B /* OFoo.m */,
-				C5B66B5A1619C704003F825B /* OBar.h */,
-				C5B66B5B1619C704003F825B /* OBar.m */,
 				C5B66B4716199970003F825B /* MemoryLayoutTests.1 */,
 			);
 			path = MemoryLayoutTests;
@@ -177,7 +193,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -200,7 +216,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -238,6 +254,7 @@
 				C5B66B4D16199970003F825B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
