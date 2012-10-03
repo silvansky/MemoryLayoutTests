@@ -37,9 +37,10 @@ int * Baz::getValuePointer()
 
 void Baz::printHello()
 {
-	// NOTE: this function does not use "this" pointer
-	// so we can call it directly from vtable, pointed by vptr
-	printf("Hello from Baz!\n");
+	// NOTE: this function uses "this" pointer
+	// so we can call it directly from vtable, pointed by vptr,
+	// but we can expect "this" to be garbage
+	printf("Hello from Baz (%p)! a = %d, &a = %p\n", this, a, &a);
 }
 
 void Baz::bazSpecific()
