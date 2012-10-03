@@ -10,6 +10,7 @@
 using namespace std;
 
 #import <objc/runtime.h>
+#include <typeinfo>
 
 #include "Foo.h"
 #include "Bar.h"
@@ -18,10 +19,10 @@ using namespace std;
 #import "OFoo.h"
 #import "OBar.h"
 
-void dump(void *vptr, size_t count)
+void hexdump(void *vptr, size_t count)
 {
 	unsigned char *ptr = (unsigned char *)vptr;
-	printf("* dumping %p (%ld)\n", ptr, count);
+	printf("* hexdumping %p (%ld)\n", ptr, count);
 	size_t pos = 0;
 	for (pos = 0; pos < count; pos++)
 	{
@@ -35,7 +36,7 @@ void dump(void *vptr, size_t count)
 	}
 	if (count % 16)
 		printf("\n");
-	printf("* end dump\n");
+	printf("* end hexdump\n");
 }
 
 class Simple
@@ -70,7 +71,7 @@ int main(int argc, const char * argv[])
 
 	cout << endl;
 
-	dump(s, sizeof(Simple));
+	hexdump(s, sizeof(Simple));
 
 	cout << endl;
 
@@ -87,18 +88,18 @@ int main(int argc, const char * argv[])
 
 	cout << endl;
 
-	cout << "Memory dump of foo1:" << endl;
-	dump(foo1, sizeof(Foo));
+	cout << "Memory hexdump of foo1:" << endl;
+	hexdump(foo1, sizeof(Foo));
 
 	cout << endl;
 
-	cout << "Memory dump of bar1:" << endl;
-	dump(bar1, sizeof(Bar));
+	cout << "Memory hexdump of bar1:" << endl;
+	hexdump(bar1, sizeof(Bar));
 
 	cout << endl;
 
-	cout << "Memory dump of baz1:" << endl;
-	dump(baz1, sizeof(Baz));
+	cout << "Memory hexdump of baz1:" << endl;
+	hexdump(baz1, sizeof(Baz));
 
 	cout << endl;
 
@@ -119,30 +120,55 @@ int main(int argc, const char * argv[])
 
 	size_t *vptr = reinterpret_cast<size_t *>(foo1);
 	cout << "vptr of foo1 is " << vptr << " value 0x" << *vptr << endl;
-	dump((void *)*vptr, 64);
+	hexdump((void *)*vptr, 64);
 	cout << endl;
 
 	vptr = reinterpret_cast<size_t *>(bar1);
 	cout << "vptr of bar1 is " << vptr << " value 0x" << *vptr << endl;
-	dump((void *)*vptr, 64);
+	hexdump((void *)*vptr, 64);
 	cout << endl;
 
 	vptr = reinterpret_cast<size_t *>(baz1);
 	cout << "vptr of baz1 is " << vptr << " value 0x" << *vptr << endl;
-	dump((void *)*vptr, 64);
+	hexdump((void *)*vptr, 64);
 
 	cout << dec;
 
 	cout << endl;
-
+	
 	cout << "Trying to call Baz::printHello directly from vtable" << endl;
 	size_t *funcs_ptr = (size_t *)*vptr;
+	cout << "All Baz functions ptr is " << funcs_ptr << endl;
 	// we have 5 virtual functions in Baz, we can call directly the last one
-	FunctionPtr bazFunc5 = (FunctionPtr)(size_t *)funcs_ptr[5];
+	size_t *baz_func5 = (size_t *)funcs_ptr[5];
+	cout << "Baz::printHello ptr is " << baz_func5 << endl;
+	FunctionPtr bazFunc5 = (FunctionPtr)baz_func5;
+	cout << "Calling..." << endl;
 	bazFunc5();
 
 	cout << endl;
-
+	
+	cout << "Trying to call Foo::printHello directly from vtable" << endl;
+	vptr = reinterpret_cast<size_t *>(foo1);
+	funcs_ptr = (size_t *)*vptr;
+	cout << "All Foo functions ptr is " << funcs_ptr << endl;
+	// we have 5 virtual functions in Baz, we can call directly the last one
+	size_t *foo_func4 = (size_t *)funcs_ptr[4];
+	cout << "Foo::printHello ptr is " << foo_func4 << endl;
+	FunctionPtr fooFunc4 = (FunctionPtr)foo_func4;
+	cout << "Calling..." << endl;
+	fooFunc4();
+	
+	cout << endl;
+	
+	cout << "Setting Foo::printHello to Baz::printHello" << endl;
+	funcs_ptr[4] = (size_t)baz_func5;
+	cout << "Calling foo1->printHello()" << endl;
+	foo1->printHello();
+	cout << "WOW! We did it!" << endl;
+	
+	cout << endl;
+	
 	cout << "Allocating space for new Bar object..." << endl;
 
 	// creating zero-filled chunk of memory
@@ -163,11 +189,19 @@ int main(int argc, const char * argv[])
 	bar2->setDoubleValue(bar1->getDoubleValue());
 
 	cout << "bar2: " << bar2 << " value " << bar2->getValue() << " double value " << bar2->getDoubleValue() << endl;
-	cout << "Memory dump for bar2:" << endl;
-	dump(bar2, sizeof(Bar));
-	cout << "Memory dump for bar1 (to compare):" << endl;
-	dump(bar1, sizeof(Bar));
-	cout << "Note that c-tor wasn\'t called, so members, inherited from Foo and Baz are uninitialized" << endl;
+	cout << "Memory hexdump of bar2:" << endl;
+	hexdump(bar2, sizeof(Bar));
+	cout << "Memory hexdump of bar1 (to compare):" << endl;
+	hexdump(bar1, sizeof(Bar));
+	cout << "Note that c-tor wasn\'t called, so members inherited from Foo and Baz are uninitialized" << endl;
+	cout << endl;
+	cout << "Type info for bar2:" << endl;
+	cout << "  name:      " << typeid(*bar2).name() << endl;
+	cout << "  hash code: " << typeid(*bar2).hash_code() << endl;
+	cout << endl;
+	cout << "Type info for bar1:" << endl;
+	cout << "  name:      " << typeid(*bar1).name() << endl;
+	cout << "  hash code: " << typeid(*bar1).hash_code() << endl;
 
 	cout << endl;
 
@@ -207,6 +241,16 @@ int main(int argc, const char * argv[])
 	cout << "obar1: " << obar1 << " value a " << obar1.a << " value b " << obar1.b << " value c " << obar1.c << endl;
 	cout << "ofoo2: " << ofoo2 << " value " << ofoo2.a << endl;
 
+	cout << endl;
+	
+	cout << "Memory hexdump of ofoo1:" << endl;
+	hexdump(ofoo1, class_getInstanceSize([OFoo class]));
+	
+	cout << endl;
+	
+	cout << "Memory hexdump of obar1:" << endl;
+	hexdump(obar1, class_getInstanceSize([OBar class]));
+	
 	cout << endl;
 
 	cout << "ofoo1 value pointer: " << [ofoo1 getValuePointer] << " offset is " << (size_t)[ofoo1 getValuePointer] - (size_t)ofoo1 << endl;

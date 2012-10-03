@@ -8,6 +8,8 @@
 
 #include "Foo.h"
 
+#include <stdio.h>
+
 Foo::Foo()
 {
 	a = 5;
@@ -26,6 +28,13 @@ int Foo::getValue() const
 void Foo::setValue(const int &value)
 {
 	a = value;
+}
+
+void Foo::printHello()
+{
+	// NOTE: this function does not use "this" pointer
+	// so we can call it directly from vtable, pointed by vptr
+	printf("Hello from Foo!\n");
 }
 
 void Foo::fooSpecific()
